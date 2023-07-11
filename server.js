@@ -1,24 +1,27 @@
 const express = require("express")
 const cors = require("cors")
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+var session = require('express-session');
 
 const app = express();
 app.use(cors())
 
-var logger = require('morgan');
 require("dotenv").config();
 require("./config/db.connection");
 
-//saveuser
-//getuser
-//getcalender
-//savecalender
-//getnote
-//savenote
-//saveopneuiresponse
-//getopenuiresponse
+app.use(cookieParser());
+
+app.use(session({
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: true
+}));
+
 app.get("/", (req, res) => {
-    res.send("Hello World");
-  });
+  res.send("Hello World");
+});
+
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
