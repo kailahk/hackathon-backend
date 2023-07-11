@@ -4,8 +4,9 @@ const cors = require("cors")
 const app = express();
 app.use(cors())
 
+var logger = require('morgan');
 require("dotenv").config();
-//require("./config/db.connection");
+require("./config/db.connection");
 
 //saveuser
 //getuser
