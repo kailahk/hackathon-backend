@@ -1,0 +1,100 @@
+const express = require("express");
+const router = express.Router();
+const {file} = require('../models')
+
+router.post("/updateUser", async (req, res) => {
+    console.log(req);
+    console.log(req.body)
+    try {
+        const newFiles = await file.findByIdAndUpdate(
+            { "_id" : req.body.id },
+            req.body,
+            { new: true }
+        );
+        res.status(201).json(newFiles);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+    }
+);
+
+router.post("/addDate", async (req, res) => {
+    try {
+        const dateFile = await file.findById(req.body.id, 'dates').exec();
+        let datesArr = dateFile.dates;
+        datesArr.push(req.body.dates);
+        const updateDate = await file.findByIdAndUpdate(
+            { "_id" : req.body.id },
+            { 
+                "relationship": dateFile.relationship,
+                "title": dateFile.title,
+                dates: datesArr
+            },
+            { new: true }
+        );
+        res.status(201).json(updateDate);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+    }
+);
+
+router.get("/getAllUsers", async (req, res) => {
+    try {
+        console.log("a")
+        const allFiles = await file.find({});
+        console.log(allFiles)
+        res.status(200).json(allFiles);
+    } catch (err) {
+        res.status(400).json({ error: err });
+
+    }
+});
+
+// router.get("/:id", async (req, res) => {
+//     try {
+//         console.log("a")
+//         const oneFile = await file.findById({});
+//         console.log(oneFile)
+//         res.status(200).json(oneFile);
+//     } catch (err) {
+//         res.status(400).json({ error: err });
+
+//     }
+// });
+
+// router.post("/", async (req, res) => {
+//     console.log(req);
+//     console.log(req.body)
+//     try {
+//         const newFiles = await file.create(req.body);
+//         res.status(201).json(newFiles);
+//     } catch (err) {
+//         res.status(400).json({ error: err.message });
+//     }
+//     }
+// );
+
+// router.put("/:id", async (req, res) => {
+//     try{
+//         const updatedFiles = await file.findyByIdAndUpdate(
+//             req.params.id,
+//             req.body,
+//             { new: true }
+//         );
+//         res.status(200).json(updatedFiles);
+//     }catch (err) {
+//         res.status(400).json({ error: err});
+//     }
+//     }
+// );
+// router.delete("/:id", async (req, res) => {
+//     try {
+//         const deletedFiles = await file.findByIdAndDelete(req.params.id);
+//         res.status(200).json(deletedFiles);
+//     } catch (err) {
+//             res.status(400).json({ error: err})
+//         }
+//     })
+
+    module.exports = router;
