@@ -1,7 +1,7 @@
 const express = require("express")
-// const path = require('path');
-// const favicon = require('serve-favicon');
-const cors = require("cors")
+const path = require('path');
+const favicon = require('serve-favicon');
+const cors = require('cors');
 var logger = require('morgan');
 // var cookieParser = require('cookie-parser');
 // var session = require('express-session');
@@ -19,23 +19,12 @@ require('dotenv').config();
 require('./config/db.connection');
 require('./config/passport');
 
-const infoController = require("./controllers/info-controller")
-app.use(cors())
-app.use(express.json());
-// var logger = require('morgan');
-require("dotenv").config();
-require("./config/db.connection");
+const infoController = require('./controllers/info-controller');
+app.use('/info', infoController);
 
-app.use("/info", infoController);
-app.get("/", (req, res) => {
+app.use('/users', require('./routes/user'));
 
-    res.send("Hello World");
-  });
-  const path = require('path');
-  // const favicon = require('serve-favicon');
-  
-  
-  app.use(logger('dev'));
+app.use(logger('dev'));
 
 // The following "catch all" route (note the *) is necessary
 // to return the index.html on all non-AJAX/API requests
