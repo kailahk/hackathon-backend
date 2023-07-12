@@ -1,5 +1,9 @@
 const express = require("express")
 const cors = require("cors")
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+var session = require('express-session');
+const passport = require('passport');
 
 const app = express();
 const infoController = require("./controllers/info-controller")
@@ -17,10 +21,10 @@ require("./config/db.connection");
 //savenote
 //saveopneuiresponse
 //getopenuiresponse
-app.use("/info", infoController)
 app.get("/", (req, res) => {
-    res.send("Hello World");
-  });
+  res.send("Hello World");
+});
+
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
