@@ -1,6 +1,6 @@
 const express = require("express")
-const path = require('path');
-const favicon = require('serve-favicon');
+// const path = require('path');
+// const favicon = require('serve-favicon');
 const cors = require("cors")
 var logger = require('morgan');
 // var cookieParser = require('cookie-parser');

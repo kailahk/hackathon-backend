@@ -30,6 +30,20 @@ router.post("/updateFile", async (req, res) => {
     }
 );
 
+router.delete("/deleteFile", async (req, res) => {
+    try {
+        const deleteFile = await file.findByIdAndDelete(
+            {"_id": req.body.id },
+            req.body,
+           { new: true } 
+        );
+        res.status(201).json(deleteFile);
+
+    } catch (err) {
+        res.status(400).json({ error: err.message})
+    }
+})
+
 router.post("/addDate", async (req, res) => {
     try {
         const dateFile = await file.findById(req.body.id, 'dates').exec();
