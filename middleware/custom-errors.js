@@ -1,4 +1,4 @@
-export class OwnerShipError extends Error {
+class OwnerShipError extends Error {
 	constructor() {
 		super();
 		this.name = 'OwnershipError';
@@ -7,7 +7,7 @@ export class OwnerShipError extends Error {
 	}
 }
 
-export class DocumentNotFoundError extends Error {
+class DocumentNotFoundError extends Error {
 	constructor() {
 		super();
 		this.name = 'DocumentNotFoundError';
@@ -17,7 +17,7 @@ export class DocumentNotFoundError extends Error {
 }
 
 // Occurs when a partial request is sent from the client.
-export class BadParamsError extends Error {
+class BadParamsError extends Error {
 	constructor() {
 		super();
 		this.name = 'BadParamsError';
@@ -27,7 +27,7 @@ export class BadParamsError extends Error {
 }
 
 // Occurs on a bad login attempt.
-export class BadCredentialsError extends Error {
+class BadCredentialsError extends Error {
 	constructor() {
 		super();
 		this.name = 'BadCredentialsError';
@@ -37,7 +37,7 @@ export class BadCredentialsError extends Error {
 }
 
 // Occurs when user manually goes to an endpoint that doesn't exist.
-export class InvalidIdError extends Error {
+class InvalidIdError extends Error {
 	constructor() {
 		super();
 		this.name = 'InvalidIdError';
@@ -46,7 +46,7 @@ export class InvalidIdError extends Error {
 	}
 }
 
-export class ExistingUserError extends Error {
+class ExistingUserError extends Error {
 	constructor() {
 		super();
 		this.name = 'ExistingUserError';
@@ -54,3 +54,12 @@ export class ExistingUserError extends Error {
 		this.message = 'The provided email is already taken';
 	}
 }
+
+module.exports = {
+	OwnerShipError,
+	DocumentNotFoundError,
+	BadParamsError,
+	BadCredentialsError,
+	InvalidIdError,
+	ExistingUserError,
+};
