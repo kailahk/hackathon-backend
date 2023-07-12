@@ -1,34 +1,23 @@
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const { Strategy, ExtractJwt } = require('passport-jwt');
 const User = require('../models/user');
+require('dotenv').config();
 
-passport.use(new GoogleStrategy(
-    {
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_SECRET,
-        callbackURL: process.env.GOOGLE_CALLBACK
-    },
-    async function (accessToken, refreshToken, profile, cb) {
-        try {
-            let user = await User.findOne({ googleId: profile.id });
-            if (user) return cb(null, user);
-            user = await User.create({
-                name: profile.displayName,
-                googleId: profile.id,
-                email: profile.emails[0].value,
-                avatar: profile.photos[0].value
-            });
-            return cb(null, user);
-        } catch (err) {
-            return cb(err);
-        }
-    }
-));
+const secret = process.env.JWT_SECRET;
 
-passport.serializeUser(function (user, cb) {
-    cb(null, user._id);
+const strategyOptions = {
+	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+	secretOrKey: secret,
+};
+
+const strategy = new Strategy(strategyOptions, (jwt_payload, done) => {
+	User.findById(jwt_payload.id)
+		.then((user) => done(null, user))
+		.catch((error) => done(error));
 });
 
-passport.deserializeUser(async function (userId, cb) {
-    cb(null, await User.findById(userId));
-});
+// Register the strategy with passport to enable passport.authenticate() method.
+passport.use(strategy);
+passport.initialize();
+
+module.exports = passport;
