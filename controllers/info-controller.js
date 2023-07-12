@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {file} = require('../models')
 
-router.post("/updateUser", async (req, res) => {
+router.post("/updateFiles", async (req, res) => {
     console.log(req);
     console.log(req.body)
     try {
@@ -39,7 +39,7 @@ router.post("/addDate", async (req, res) => {
     }
 );
 
-router.get("/getAllUsers", async (req, res) => {
+router.get("/getAllUserFiles", async (req, res) => {
     try {
         console.log("a")
         const allFiles = await file.find({});
@@ -63,17 +63,17 @@ router.get("/getAllUsers", async (req, res) => {
 //     }
 // });
 
-// router.post("/", async (req, res) => {
-//     console.log(req);
-//     console.log(req.body)
-//     try {
-//         const newFiles = await file.create(req.body);
-//         res.status(201).json(newFiles);
-//     } catch (err) {
-//         res.status(400).json({ error: err.message });
-//     }
-//     }
-// );
+router.post("/createFile", async (req, res) => {
+    console.log(req);
+    console.log(req.body)
+    try {
+        const newFiles = await file.create(req.body);
+        res.status(201).json(newFiles);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+    }
+);
 
 // router.put("/:id", async (req, res) => {
 //     try{
