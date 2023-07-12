@@ -1,5 +1,9 @@
 const express = require("express")
 const cors = require("cors")
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+var session = require('express-session');
+const passport = require('passport');
 
 const app = express();
 const infoController = require("./controllers/info-controller")
@@ -17,8 +21,8 @@ require("./config/db.connection");
 //savenote
 //saveopneuiresponse
 //getopenuiresponse
-app.use("/info", infoController)
 app.get("/", (req, res) => {
+
     res.send("Hello World");
   });
   const path = require('path');
@@ -26,6 +30,7 @@ app.get("/", (req, res) => {
   
   
   app.use(logger('dev'));
+
 
   
   app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
