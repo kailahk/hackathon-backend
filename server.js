@@ -8,8 +8,6 @@ var logger = require('morgan');
 // const passport = require('passport');
 // const passport = require('./config/passport');
 const { handleErrors } = require('./middleware/error-handlers');
-const path = require('path');
-const favicon = require('serve-favicon');
 
 const app = express();
 app.use(cors());
