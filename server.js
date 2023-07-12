@@ -43,6 +43,7 @@ app.get("/", (req, res) => {
 
     res.send("Hello World");
   });
+  app.use("/info", infoController)
   const path = require('path');
   const favicon = require('serve-favicon');
   
