@@ -1,22 +1,48 @@
 const express = require("express");
 const router = express.Router();
-const {file} = require('../models')
+const {file} = require('../models');
 
-router.post("/updateUser", async (req, res) => {
+router.post("/createFile", async (req, res) => {
     console.log(req);
     console.log(req.body)
     try {
-        const newFiles = await file.findByIdAndUpdate(
-            { "_id" : req.body.id },
-            req.body,
-            { new: true }
-        );
-        res.status(201).json(newFiles);
+        const newFile = await file.create(req.body);
+        res.status(201).json(newFile);
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
     }
 );
+
+router.post("/updateFile", async (req, res) => {
+    console.log(req);
+    console.log(req.body)
+    try {
+        const updateFile = await file.findByIdAndUpdate(
+            { "_id" : req.body.id },
+            req.body,
+            { new: true }
+        );
+        res.status(201).json(updateFile);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+    }
+);
+
+router.delete("/deleteFile", async (req, res) => {
+    try {
+        const deleteFile = await file.findByIdAndDelete(
+            {"_id": req.body.id },
+            req.body,
+           { new: true } 
+        );
+        res.status(201).json(deleteFile);
+
+    } catch (err) {
+        res.status(400).json({ error: err.message})
+    }
+})
 
 router.post("/addDate", async (req, res) => {
     try {
@@ -39,7 +65,7 @@ router.post("/addDate", async (req, res) => {
     }
 );
 
-router.get("/getAllUsers", async (req, res) => {
+router.get("/getAllUserFiles", async (req, res) => {
     try {
         console.log("a")
         const allFiles = await file.find({});
@@ -63,17 +89,17 @@ router.get("/getAllUsers", async (req, res) => {
 //     }
 // });
 
-// router.post("/", async (req, res) => {
-//     console.log(req);
-//     console.log(req.body)
-//     try {
-//         const newFiles = await file.create(req.body);
-//         res.status(201).json(newFiles);
-//     } catch (err) {
-//         res.status(400).json({ error: err.message });
-//     }
-//     }
-// );
+router.post("/createFile", async (req, res) => {
+    console.log(req);
+    console.log(req.body)
+    try {
+        const newFiles = await file.create(req.body);
+        res.status(201).json(newFiles);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+    }
+);
 
 // router.put("/:id", async (req, res) => {
 //     try{
