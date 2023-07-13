@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const fileSchema = new Schema({
     title: {type: String, required: true},
-    user: {type: Schema.Types.ObjectId, ref: 'User'},
+    userid: {type: String},
     relationship: {type: String, required: true},
     circumstances: {type: Array},
     age: {type: Number},

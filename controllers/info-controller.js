@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {file} = require('../models');
+const {file, user} = require('../models');
 
 router.post("/createFile", async (req, res) => {
     console.log(req);
@@ -30,7 +30,7 @@ router.post("/updateFile", async (req, res) => {
     }
 );
 
-router.delete("/deleteFile", async (req, res) => {
+router.post("/deleteFile", async (req, res) => {
     try {
         const deleteFile = await file.findByIdAndDelete(
             {"_id": req.body.id },
@@ -46,8 +46,8 @@ router.delete("/deleteFile", async (req, res) => {
 
 router.post("/addDate", async (req, res) => {
     try {
-        const dateFile = await file.findById(req.body.id, 'dates').exec();
-        let datesArr = dateFile.dates;
+        const dateFile = await file.findById(req.body.id, 'date').exec();
+        let datesArr = dateFile.date;
         datesArr.push(req.body.dates);
         const updateDate = await file.findByIdAndUpdate(
             { "_id" : req.body.id },
@@ -77,6 +77,14 @@ router.get("/getAllUserFiles", async (req, res) => {
     }
 });
 
+router.post("/getFiles", async (req, res) => {
+    try{
+        const userFiles = await file.find({ userid: req.body.userid }).exec();
+        res.status(200).json(userFiles);
+    } catch (err) {
+        res.status(400).json({ error: err })
+    }
+});
 // router.get("/:id", async (req, res) => {
 //     try {
 //         console.log("a")
