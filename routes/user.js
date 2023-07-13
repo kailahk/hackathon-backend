@@ -1,19 +1,16 @@
 const router = require('express').Router();
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
-const { validateUserExists } = require('../middleware/error-handlers');
-const { createUserToken, isTokenExpired, getIdFromToken } = require('../middleware/auth');
+const { validateUserExists } = require('../middleware/validation');
+const {
+  requireToken,
+  createUserToken,
+  isTokenExpired,
+  getIdFromToken,
+} = require('../middleware/auth');
 require('dotenv').config();
 
-router.get('/', (request, response, next) => {
-  console.log('Requesting all users');
-  User.find({})
-    .then((users) => response.json(users))
-    .catch(next);
-});
-
 router.post('/signup', (request, response, next) => {
-  console.log(request.body);
   User.findOne({ email: request.body.email })
     .then(validateUserExists)
     .then(() => bcrypt.hash(request.body.password, 10))
@@ -27,21 +24,19 @@ router.post('/signup', (request, response, next) => {
     .catch(next);
 });
 
-// Send token to client or throw error.
 router.post('/login', (request, response, next) => {
-  console.log(request.body);
   User.findOne({ email: request.body.email })
     .then((user) => createUserToken(request, user))
-    .then((token) => response.json({ token }))
+    .then((token) => response.status(201).json({ token }))
     .catch(next);
 });
 
-router.get('/me', (request, response, next) => {
+router.get('/me', requireToken, (request, response, next) => {
   if (isTokenExpired(request)) {
     return response.status(401).json({ message: 'Token expired' });
   }
   User.findById(getIdFromToken(request))
-    .then((user) => response.json(user))
+    .then((user) => response.status(200).json(user))
     .catch(next);
 });
 

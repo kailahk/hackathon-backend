@@ -2,11 +2,9 @@ const passport = require('../config/passport');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const jwtDecode = require('jwt-decode');
-
 require('dotenv').config();
 
 const secret = process.env.JWT_SECRET;
-
 const requireToken = passport.authenticate('jwt', { session: false });
 
 function createUserToken(request, user) {
@@ -20,13 +18,11 @@ function createUserToken(request, user) {
     throw error;
   }
 
-  // If no error, create and return the token using user's id.
   return jwt.sign({ id: user._id }, secret, { expiresIn: '7d' });
 }
 
 function isTokenExpired(request) {
   const { exp } = jwtDecode(request.headers.authorization.slice(7));
-  // console.log({ now: Date.now(), exp: exp, timeToExpire: Date.now() - exp * 1000 });
 
   return Date.now() >= exp * 1000;
 }
