@@ -1,4 +1,5 @@
 const express = require("express")
+const openai = require('openai');
 const path = require('path');
 const favicon = require('serve-favicon');
 const cors = require('cors');
@@ -20,9 +21,12 @@ require('./config/db.connection');
 require('./config/passport');
 
 const infoController = require('./controllers/info-controller');
+
 app.use('/info', infoController);
 
 app.use('/users', require('./routes/user'));
+
+app.use('/chat', require('./routes/chat'))
 
 app.use(logger('dev'));
 
