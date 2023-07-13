@@ -5,6 +5,13 @@ const { validateUserExists } = require('../middleware/error-handlers');
 const { createUserToken, getIdFromToken } = require('../middleware/auth');
 require('dotenv').config();
 
+router.get('/', (request, response, next) => {
+	console.log('Requesting all users');
+	User.find({})
+		.then((users) => response.json(users))
+		.catch(next);
+});
+
 router.post('/signup', (request, response, next) => {
 	console.log(request.body);
 	User.findOne({ email: request.body.email })
