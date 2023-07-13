@@ -42,6 +42,7 @@ const validateId = function (request, response, next) {
 
 // Generic catch-all handler.
 const handleErrors = function (error, request, response, next) {
+	console.log(error)
 	const statusCode = error.statusCode || 500;
 
 	const message = error.message || 'Internal Server Error';
