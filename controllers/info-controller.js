@@ -33,7 +33,7 @@ router.post("/updateFile", async (req, res) => {
 router.post("/deleteFile", async (req, res) => {
     try {
         const deleteFile = await file.findByIdAndDelete(
-            {"_id": req.body.id },
+            {"_id": req.body.fileid },
             req.body,
            { new: true } 
         );
