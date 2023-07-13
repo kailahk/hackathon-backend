@@ -55,11 +55,21 @@ class ExistingUserError extends Error {
 	}
 }
 
+// Generic catch-all handler.
+const handleErrors = function (error, request, response, next) {
+  const statusCode = error.statusCode || 500;
+
+  const message = error.message || 'Internal Server Error';
+
+  response.status(statusCode).send(message);
+};
+
 module.exports = {
-	OwnerShipError,
-	DocumentNotFoundError,
-	BadParamsError,
-	BadCredentialsError,
-	InvalidIdError,
-	ExistingUserError,
+  OwnerShipError,
+  DocumentNotFoundError,
+  BadParamsError,
+  BadCredentialsError,
+  InvalidIdError,
+  ExistingUserError,
+  handleErrors,
 };

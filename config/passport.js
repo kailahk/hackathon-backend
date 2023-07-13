@@ -16,7 +16,6 @@ const strategy = new Strategy(strategyOptions, (jwt_payload, done) => {
 		.catch((error) => done(error));
 });
 
-// Register the strategy with passport to enable passport.authenticate() method.
 passport.use(strategy);
 passport.initialize();
 
