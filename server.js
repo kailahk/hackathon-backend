@@ -34,7 +34,7 @@ app.options('*', (req, res, next) => {
 app.use((req, res, next) => {
 	console.log({ 'Request ->': req.headers });
 	// res.header('Access-Control-Allow-Origin', allowedOrigins);
-	res.header('Access-Control-Allow-Headers', 'Authorization');
+	res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
 	const origin = req.headers.origin;
 	if (allowedOrigins.includes(origin)) {
