@@ -3,9 +3,23 @@ const cors = require('cors');
 const logger = require('morgan');
 
 const app = express();
-app.set('port', process.env.PORT || 8000);
+// app.set('port', process.env.PORT || 8000);
 
-app.use(cors());
+app.use(cors()); // Enables all origins
+app.options('*', cors()); // Handles preflight request
+
+// Handles actual requests
+app.use((req, res, next) => {
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Headers', 'Authorization');
+
+	// Handle the OPTIONS method for preflight requests
+	if (req.method === 'OPTIONS') {
+		res.sendStatus(200);
+	} else {
+		next();
+	}
+});
 
 // app.use(
 // 	cors({
