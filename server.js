@@ -12,17 +12,17 @@ app.use(cors({
 app.options('*', cors()); // Handles preflight requests
 
 // Handles actual requests
-app.use((req, res, next) => {
-	res.header('Access-Control-Allow-Origin', '*');
-	res.header('Access-Control-Allow-Headers', 'Authorization');
+// app.use((req, res, next) => {
+// 	res.header('Access-Control-Allow-Origin', '*');
+// 	res.header('Access-Control-Allow-Headers', 'Authorization');
 
-	// Handle the OPTIONS method for preflight requests
-	if (req.method === 'OPTIONS') {
-		res.sendStatus(200);
-	} else {
-		next();
-	}
-});
+// 	// Handle the OPTIONS method for preflight requests
+// 	if (req.method === 'OPTIONS') {
+// 		res.sendStatus(200);
+// 	} else {
+// 		next();
+// 	}
+// });
 
 // app.use(
 // 	cors({
