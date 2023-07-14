@@ -85,17 +85,19 @@ router.post("/getFiles", async (req, res) => {
         res.status(400).json({ error: err })
     }
 });
-// router.get("/:id", async (req, res) => {
-//     try {
-//         console.log("a")
-//         const oneFile = await file.findById({});
-//         console.log(oneFile)
-//         res.status(200).json(oneFile);
-//     } catch (err) {
-//         res.status(400).json({ error: err });
 
-//     }
-// });
+router.get("/:id", async (req, res) => {
+    try {
+        console.log("a")
+        const oneFile = await file.findById({
+            _id: req.params.id
+        });
+        console.log(oneFile)
+        res.status(200).json(oneFile);
+    } catch (err) {
+        res.status(400).json({ error: err });
+    }
+});
 
 router.post("/createFile", async (req, res) => {
     console.log(req);
