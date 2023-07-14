@@ -5,7 +5,10 @@ const logger = require('morgan');
 const app = express();
 // app.set('port', process.env.PORT || 8000);
 
-app.use(cors()); // Enables all origins
+app.use(cors({
+  origin: '*'
+}));
+// app.use(cors()); // Enables all origins
 app.options('*', cors()); // Handles preflight requests
 
 // Handles actual requests
