@@ -5,21 +5,49 @@ const logger = require('morgan');
 const app = express();
 // app.set('port', process.env.PORT || 8000);
 
-app.use(cors({
-  origin: '*'
-}));
+const allowedOrigins = [
+	'http://localhost:3000',
+	'https://localhost:3000',
+	'http://ally-fj80.onrender.com',
+	'https://ally-fj80.onrender.com',
+	'http://ally-5t5u.onrender.com/',
+	'https://ally-5t5u.onrender.com/',
+];
+
+app.use(
+	cors({
+		origin: allowedOrigins,
+	})
+);
 // app.use(cors()); // Enables all origins
-app.options('*', cors()); // Handles preflight requests
+
+// Handles preflight requests
+app.options('*', (req, res, next) => {
+	console.log({ 'Preflight ->': req.headers });
+	res.header('Access-Control-Allow-Origin', req.origin);
+	res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+	res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+	res.sendStatus(200);
+});
 
 // Handles actual requests
 app.use((req, res, next) => {
-	res.header('Access-Control-Allow-Origin', '*');
+	console.log({ 'Request ->': req.headers });
+	// res.header('Access-Control-Allow-Origin', allowedOrigins);
 	res.header('Access-Control-Allow-Headers', 'Authorization');
 
-	// Handle the OPTIONS method for preflight requests
+	const origin = req.headers.origin;
+	if (allowedOrigins.includes(origin)) {
+		console.log('Request -> origin included');
+		res.setHeader('Access-Control-Allow-Origin', origin);
+	}
+
 	if (req.method === 'OPTIONS') {
+		// Handle the OPTIONS method for preflight requests
+		console.log('Request -> OPTIONS true');
 		res.sendStatus(200);
 	} else {
+		console.log('Request -> OPTIONS false');
 		next();
 	}
 });
