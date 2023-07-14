@@ -6,7 +6,7 @@ const fileSchema = new Schema({
     userid: {type: String},
     relationship: {type: String, required: true},
     circumstances: {type: Array},
-    age: {type: Number},
+    birthday: {type: Date},
     date: {type: Date},
     notes: {type: String},
     aiContent: {type: Object}
