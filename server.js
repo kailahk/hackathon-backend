@@ -11,14 +11,18 @@ require('./config/db.connection');
 require('./config/passport');
 
 const app = express();
+app.use(
+	cors({
+		origin: [
+			'http:localhost:8000',
+			'http://ally-fj80.onrender.com',
+			'https://ally-fj80.onrender.com',
+		],
+		credentials: true,
+	})
+);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors({ origin: '*' }));
-app.use(function (req, res, next) {
-	req;
-	res.header('Access-Control-Allow-Origin', '*');
-	next();
-});
 
 app.use(logger('dev'));
 app.use('/info', infoController);
