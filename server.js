@@ -5,7 +5,9 @@ const logger = require('morgan');
 const app = express();
 app.set('port', process.env.PORT || 8000);
 
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
 
 // app.use(
 // 	cors({
