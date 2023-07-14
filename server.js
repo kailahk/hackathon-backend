@@ -21,6 +21,7 @@ app.use(
 		credentials: true,
 	})
 );
+app.use('*', cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
