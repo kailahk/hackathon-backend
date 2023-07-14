@@ -3,6 +3,10 @@ const cors = require('cors');
 const logger = require('morgan');
 
 const app = express();
+app.set('port', process.env.PORT || 8000);
+
+app.use(cors());
+
 // app.use(
 // 	cors({
 // 		origin: [
@@ -14,6 +18,7 @@ const app = express();
 // 	})
 // );
 // app.use('*', cors());
+
 // app.use(function (req, res, next) {
 // 	const allowedOrigins = [
 // 		'http://localhost:3000',
@@ -32,6 +37,7 @@ const app = express();
 // 	res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, UPDATE');
 // 	next();
 // });
+
 // app.use(
 // 	cors({
 // 		origin: [
@@ -42,28 +48,29 @@ const app = express();
 // 		credentials: true,
 // 	})
 // );
-app.use(cors());
-app.use(function (req, res, next) {
-	const allowedOrigins = [
-		'http://localhost:3000',
-		'https://localhost:3000',
-		'http://ally-fj80.onrender.com',
-		'https://ally-fj80.onrender.com',
-		'http://ally-5t5u.onrender.com/',
-		'https://ally-5t5u.onrender.com/',
-	];
-	const origin = req.headers.origin;
-	if (allowedOrigins.includes(origin)) {
-		res.setHeader('Access-Control-Allow-Origin', origin);
-	}
-	res.header(
-		'Access-Control-Allow-Headers',
-		'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-	);
-	res.header('Access-Control-Allow-credentials', true);
-	res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, UPDATE');
-	next();
-});
+
+// app.use(cors());
+// app.use(function (req, res, next) {
+// 	const allowedOrigins = [
+// 		'http://localhost:3000',
+// 		'https://localhost:3000',
+// 		'http://ally-fj80.onrender.com',
+// 		'https://ally-fj80.onrender.com',
+// 		'http://ally-5t5u.onrender.com/',
+// 		'https://ally-5t5u.onrender.com/',
+// 	];
+// 	const origin = req.headers.origin;
+// 	if (allowedOrigins.includes(origin)) {
+// 		res.setHeader('Access-Control-Allow-Origin', origin);
+// 	}
+// 	res.header(
+// 		'Access-Control-Allow-Headers',
+// 		'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+// 	);
+// 	res.header('Access-Control-Allow-credentials', true);
+// 	res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, UPDATE');
+// 	next();
+// });
 
 const infoController = require('./controllers/info-controller');
 const userController = require('./routes/user');
