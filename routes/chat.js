@@ -7,7 +7,7 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-const openaiChatModel = 'gpt-3.5-turbo';
+const openaiChatModel = 'gpt-3.5-turbo-0613';
 
 router.post('/', async (req, res, next) => {
     try {
